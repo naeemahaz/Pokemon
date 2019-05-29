@@ -1,0 +1,228 @@
+Task 1: Instructions
+
+
+
+
+
+Load and prepare the Pokédex.
+Load the tidyverse.
+Convert type and is_legendary to factors.
+Look at the first six rows of the Pokédex.
+Examine the structure.
+
+
+Good to know
+
+This project uses the tidyverse suite of packages, particularly dplyr and ggplot2, so it would be useful to have some familiarity with those packages beforehand. If you need to brush up, work through DataCamp's Introduction to the Tidyverse course before you begin.
+
+Students should also have a general knowledge of classification problems in machine learning, as taught through Supervised Learning in R: Classification. In particular, they should have experience with tree-based models including classification trees and random forests, which are covered in detail in Machine Learning with Tree-Based Models in R.
+
+For a concise introduction to decision trees in R, see James Le's tutorial.
+
+If you experience odd behavior you can reset the project by clicking the circular arrow in the bottom-right corner of the screen. Resetting the project will discard all code you have written so be sure to save it offline first.
+
+
+Task 2: Instructions
+
+
+
+
+
+Count the number of legendary/non-legendary Pokémon.
+Count the number of observations in each group of is_legendary.
+Divide by the number of rows in the Pokédex.
+Print the data frame.
+
+
+The count() function from dplyr tallies the number of observations in each group of the variable you pass to it. The following code – df %>% count(x) – is simply shorthand for:
+
+df %>% group_by(x) %>% summarize(n = sum(x)) %>% ungroup().
+
+Helpful links:
+dplyr cheatsheet
+count() function documentation
+
+Task 3: Instructions
+
+
+
+
+
+Compare the height and weight of legendary and non-legendary Pokémon.
+Map x and y to height_m and weight_kg respectively.
+Map the color of geom_point() to is_legendary.
+Set the label to print if height_m > 7.5 OR if weight_kg > 600.
+Expand the limit of the x-axis to 16.
+
+
+The expand_limits() function from ggplot2 allows you to expand the plot limits, either on the x-axis or the y-axis.
+
+Helpful links:
+ggplot2 cheatsheet
+expand_limits() function documentation
+
+
+
+
+Task 4: Instructions
+
+
+
+
+
+Examine the proportion of legendary/non-legendary Pokémon by type.
+Group the data by type.
+Calculate the proportion of legendary pokemon (prop_legendary) in each type by taking the mean of is_legendary.
+Reorder type by the proportion of legendary Pokémon.
+Map both y and fill to the proportion of legendary Pokémon.
+
+
+fct_reorder() is a handy function from forcats that allows you to reorder factor levels according to the values of another variable, rather than alphabetically. It is particularly useful when you want to reorder categorical data for a bar or column chart.
+
+Helpful links:
+forcats package documentation
+fct_reorder() function documentation
+
+
+Task 5: Instructions
+
+
+
+
+
+Compare the fighter stats of legendary/non-legendary Pokémon.
+Select the six relevant columns from the Pokédex.
+Gather the data into key-value pairs called fght_stats and value respectively, while excluding is_legendary.
+Use facet_wrap() so that each facet represents a value from fght_stats.
+Remove the legend using the guides() function.
+
+
+Faceting is an efficient way to visualize data when it can be split by one or more categorical variables. There are two ways to facet data in ggplot2: facet_wrap() and facet_grid(). These two functions are similar and can produce identical output. As a rule of thumb, however, facet_wrap() is more convenient when you want to facet by a single variable, while facet_grid() is better for when you need to facet by two.
+
+Helpful links:
+facet_wrap() function documentation
+facet_grid() function documentation
+gather() function documentation
+'Remove legend ggplot 2.2' question on Stack Overflow
+
+
+
+Task 6: Instructions
+
+
+
+
+
+Split the Pokédex into a training set and a test set.
+Set the seed to 1234.
+Save the number of rows in the Pokédex to n.
+Multiply n by 0.6 to generate a 60% sample.
+Create training and test sets by using the sample_rows object.
+
+
+The sample() function from base R takes a sample of specified size from the elements of some vector, x. For example, if you wanted to take a sample of 100 observations from x, you would write sample(x, 100). By default, the function samples without replacement (which is preferable in this case).
+
+Helpful links:
+sample() function documentation
+
+
+
+Task 7: Instructions
+
+
+
+
+
+Fit and plot a decision tree.
+Load the rpart and rpart.plot packages and set the seed to 1234.
+Fit the decision tree to the training data.
+Omit incomplete observations.
+Plot the decision tree using rpart.plot().
+
+
+rpart() is the flagship function from the rpart package. It uses the standard formula interface, where the syntax y ~ a + b is used to model y as a function of both a and b. rpart() can be used to fit both regression and classification models, but since we are fitting a classification tree, we set the method argument to "class".
+
+Helpful links:
+rpart package documentation
+rpart() function documentation
+rpart.plot() function documentation
+
+
+
+Task 8: Instructions
+
+
+
+
+
+Fit the random forest.
+Load the randomForest package and set the seed to 1234.
+Fit the random forest to the training data.
+Omit incomplete observations.
+Print the model output.
+
+
+randomForest() is the flagship function from the randomForest package. It uses the standard formula interface, where the syntax y ~ a + b is used to model y as a function of a and b. In order to return both of the variable importance measures associated with random forests (see Task 10), we set the importance argument equal to TRUE. 
+
+Helpful links:
+randomForest package documentation
+randomForest() function documentation
+
+
+
+Task 9: Instructions
+
+
+
+
+
+Plot ROC curves for the decision tree and random forest.
+Using the random forest model, predict the probability of being legendary for the Pokémon in the test set.
+Create a prediction object for the random forest.
+Create a performance object for the random forest.
+Plot the ROC curves for perf_tree and perf_forest.
+
+
+The ROCR package holds a number of useful functions for evaluating the performance of classification models. Every evaluation starts with the creation of a prediction object, which transforms the input data into a standardized format. We can then use the performance function to return various performance measures, including true positive rate (tpr), false positive rate (fpr), accuracy (acc) and error rate (err).
+
+Helpful links:
+ROCR package documentation
+
+
+Task 10: Instructions
+
+
+
+
+
+Analyze the variable importance results from the random forest.
+Print variable importance using the importance() function.
+Plot variable importance using the varImpPlot() function.
+
+
+It is worth noting that variable importance measures are specific to the model you have fitted. It is therefore possible that changing the specification of your model – for example by adding/removing variables or tuning hyperparameters – will also change your interpretation of relative variable importance. Nevertheless, the variable importance results of a random forest are more stable than for a single classification tree and can therefore be interpreted with greater confidence.
+
+Helpful links:
+importance() function documentation
+varImpPlot() function documentation
+
+
+Task 11: Instructions
+
+
+
+
+
+Answer Professor Oak's questions about the variable importance results.
+Answer Q1 and Q2 with regard to MeanDecreaseAccuracy.
+Answer Q3 and Q4 with regard to MeanDecreaseGini.
+
+
+One aspect of machine learning not covered in this project is hyperparameter tuning, which helps you to achieve the most accurate results for your predictive model. For more on this topic, take DataCamp's Hyperparameter Tuning in R course.
+
+
+
+
+
+
+
